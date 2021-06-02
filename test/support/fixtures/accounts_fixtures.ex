@@ -1,7 +1,7 @@
-defmodule Nomattic.AccountsFixtures do
+defmodule Nomatic.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Nomattic.Accounts` context.
+  entities via the `Nomatic.Accounts` context.
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
@@ -18,7 +18,7 @@ defmodule Nomattic.AccountsFixtures do
     {:ok, user} =
       attrs
       |> valid_user_attributes()
-      |> Nomattic.Accounts.register_user()
+      |> Nomatic.Accounts.register_user()
 
     user
   end

@@ -1,7 +1,7 @@
-defmodule NomatticWeb.UserSessionControllerTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.UserSessionControllerTest do
+  use NomaticWeb.ConnCase, async: true
 
-  import Nomattic.AccountsFixtures
+  import Nomatic.AccountsFixtures
 
   setup do
     %{user: user_fixture()}
@@ -50,7 +50,7 @@ defmodule NomatticWeb.UserSessionControllerTest do
           }
         })
 
-      assert conn.resp_cookies["_nomattic_web_user_remember_me"]
+      assert conn.resp_cookies["_nomatic_web_user_remember_me"]
       assert redirected_to(conn) =~ "/"
     end
 

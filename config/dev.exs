@@ -1,10 +1,10 @@
 use Mix.Config
 
 # Configure your database
-config :nomattic, Nomattic.Repo,
+config :nomatic, Nomatic.Repo,
   username: "postgres",
   password: "postgres",
-  database: "nomattic_dev",
+  database: "nomatic_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -15,7 +15,7 @@ config :nomattic, Nomattic.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :nomattic, NomatticWeb.Endpoint,
+config :nomatic, NomaticWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -55,13 +55,13 @@ config :nomattic, NomatticWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :nomattic, NomatticWeb.Endpoint,
+config :nomatic, NomaticWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/nomattic_web/(live|views)/.*(ex)$",
-      ~r"lib/nomattic_web/templates/.*(eex)$"
+      ~r"lib/nomatic_web/(live|views)/.*(ex)$",
+      ~r"lib/nomatic_web/templates/.*(eex)$"
     ]
   ]
 

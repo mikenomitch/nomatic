@@ -1,4 +1,4 @@
-defmodule Nomattic.Repo.Migrations.CreateUsersAuthTables do
+defmodule Nomatic.Repo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

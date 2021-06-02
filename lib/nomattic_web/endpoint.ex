@@ -1,16 +1,16 @@
-defmodule NomatticWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :nomattic
+defmodule NomaticWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :nomatic
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_nomattic_key",
+    key: "_nomatic_key",
     signing_salt: "1vRRe67l"
   ]
 
-  socket "/socket", NomatticWeb.UserSocket,
+  socket "/socket", NomaticWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -22,7 +22,7 @@ defmodule NomatticWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :nomattic,
+    from: :nomatic,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
@@ -32,7 +32,7 @@ defmodule NomatticWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :nomattic
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :nomatic
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -50,5 +50,5 @@ defmodule NomatticWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug NomatticWeb.Router
+  plug NomaticWeb.Router
 end

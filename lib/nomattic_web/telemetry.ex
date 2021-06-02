@@ -1,4 +1,4 @@
-defmodule NomatticWeb.Telemetry do
+defmodule NomaticWeb.Telemetry do
   use Supervisor
   import Telemetry.Metrics
 
@@ -31,11 +31,11 @@ defmodule NomatticWeb.Telemetry do
       ),
 
       # Database Metrics
-      summary("nomattic.repo.query.total_time", unit: {:native, :millisecond}),
-      summary("nomattic.repo.query.decode_time", unit: {:native, :millisecond}),
-      summary("nomattic.repo.query.query_time", unit: {:native, :millisecond}),
-      summary("nomattic.repo.query.queue_time", unit: {:native, :millisecond}),
-      summary("nomattic.repo.query.idle_time", unit: {:native, :millisecond}),
+      summary("nomatic.repo.query.total_time", unit: {:native, :millisecond}),
+      summary("nomatic.repo.query.decode_time", unit: {:native, :millisecond}),
+      summary("nomatic.repo.query.query_time", unit: {:native, :millisecond}),
+      summary("nomatic.repo.query.queue_time", unit: {:native, :millisecond}),
+      summary("nomatic.repo.query.idle_time", unit: {:native, :millisecond}),
 
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
@@ -49,7 +49,7 @@ defmodule NomatticWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {NomatticWeb, :count_users, []}
+      # {NomaticWeb, :count_users, []}
     ]
   end
 end

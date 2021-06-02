@@ -1,3 +1,3 @@
-defmodule NomatticWeb.UserConfirmationView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.UserConfirmationView do
+  use NomaticWeb, :view
 end

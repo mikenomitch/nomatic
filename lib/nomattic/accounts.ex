@@ -1,11 +1,11 @@
-defmodule Nomattic.Accounts do
+defmodule Nomatic.Accounts do
   @moduledoc """
   The Accounts context.
   """
 
   import Ecto.Query, warn: false
-  alias Nomattic.Repo
-  alias Nomattic.Accounts.{User, UserToken, UserNotifier}
+  alias Nomatic.Repo
+  alias Nomatic.Accounts.{User, UserToken, UserNotifier}
 
   ## Database getters
 

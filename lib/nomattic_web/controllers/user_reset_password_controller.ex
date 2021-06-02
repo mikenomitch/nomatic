@@ -1,7 +1,7 @@
-defmodule NomatticWeb.UserResetPasswordController do
-  use NomatticWeb, :controller
+defmodule NomaticWeb.UserResetPasswordController do
+  use NomaticWeb, :controller
 
-  alias Nomattic.Accounts
+  alias Nomatic.Accounts
 
   plug :get_user_by_reset_password_token when action in [:edit, :update]
 

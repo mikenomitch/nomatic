@@ -1,12 +1,12 @@
-defmodule NomatticWeb do
+defmodule NomaticWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use NomatticWeb, :controller
-      use NomatticWeb, :view
+      use NomaticWeb, :controller
+      use NomaticWeb, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule NomatticWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: NomatticWeb
+      use Phoenix.Controller, namespace: NomaticWeb
 
       import Plug.Conn
-      import NomatticWeb.Gettext
-      alias NomatticWeb.Router.Helpers, as: Routes
+      import NomaticWeb.Gettext
+      alias NomaticWeb.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/nomattic_web/templates",
-        namespace: NomatticWeb
+        root: "lib/nomatic_web/templates",
+        namespace: NomaticWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -45,7 +45,7 @@ defmodule NomatticWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {NomatticWeb.LayoutView, "live.html"}
+        layout: {NomaticWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
     end
@@ -72,7 +72,7 @@ defmodule NomatticWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import NomatticWeb.Gettext
+      import NomaticWeb.Gettext
     end
   end
 
@@ -87,9 +87,9 @@ defmodule NomatticWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import NomatticWeb.ErrorHelpers
-      import NomatticWeb.Gettext
-      alias NomatticWeb.Router.Helpers, as: Routes
+      import NomaticWeb.ErrorHelpers
+      import NomaticWeb.Gettext
+      alias NomaticWeb.Router.Helpers, as: Routes
     end
   end
 

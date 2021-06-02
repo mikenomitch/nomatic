@@ -1,9 +1,9 @@
-defmodule NomatticWeb.UserRegistrationController do
-  use NomatticWeb, :controller
+defmodule NomaticWeb.UserRegistrationController do
+  use NomaticWeb, :controller
 
-  alias Nomattic.Accounts
-  alias Nomattic.Accounts.User
-  alias NomatticWeb.UserAuth
+  alias Nomatic.Accounts
+  alias Nomatic.Accounts.User
+  alias NomaticWeb.UserAuth
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})

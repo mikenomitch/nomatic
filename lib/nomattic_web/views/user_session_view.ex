@@ -1,3 +1,3 @@
-defmodule NomatticWeb.UserSessionView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.UserSessionView do
+  use NomaticWeb, :view
 end

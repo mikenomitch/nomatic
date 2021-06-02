@@ -1,5 +1,5 @@
-defmodule NomatticWeb.LayoutViewTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.LayoutViewTest do
+  use NomaticWeb.ConnCase, async: true
 
   # When testing helpers, you may want to import Phoenix.HTML and
   # use functions such as safe_to_string() to convert the helper

@@ -1,7 +1,7 @@
-defmodule NomatticWeb.UserConfirmationController do
-  use NomatticWeb, :controller
+defmodule NomaticWeb.UserConfirmationController do
+  use NomaticWeb, :controller
 
-  alias Nomattic.Accounts
+  alias Nomatic.Accounts
 
   def new(conn, _params) do
     render(conn, "new.html")

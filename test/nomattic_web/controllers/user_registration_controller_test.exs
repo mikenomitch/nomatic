@@ -1,7 +1,7 @@
-defmodule NomatticWeb.UserRegistrationControllerTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.UserRegistrationControllerTest do
+  use NomaticWeb.ConnCase, async: true
 
-  import Nomattic.AccountsFixtures
+  import Nomatic.AccountsFixtures
 
   describe "GET /users/register" do
     test "renders registration page", %{conn: conn} do

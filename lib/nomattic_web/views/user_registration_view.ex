@@ -1,3 +1,3 @@
-defmodule NomatticWeb.UserRegistrationView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.UserRegistrationView do
+  use NomaticWeb, :view
 end

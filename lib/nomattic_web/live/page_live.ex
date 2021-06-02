@@ -1,5 +1,5 @@
-defmodule NomatticWeb.PageLive do
-  use NomatticWeb, :live_view
+defmodule NomaticWeb.PageLive do
+  use NomaticWeb, :live_view
 
   @impl true
   def mount(_params, _session, socket) do
@@ -26,7 +26,7 @@ defmodule NomatticWeb.PageLive do
   end
 
   defp search(query) do
-    if not NomatticWeb.Endpoint.config(:code_reloader) do
+    if not NomaticWeb.Endpoint.config(:code_reloader) do
       raise "action disabled when not in development"
     end
 

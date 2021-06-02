@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :nomattic,
-  ecto_repos: [Nomattic.Repo]
+config :nomatic,
+  ecto_repos: [Nomatic.Repo]
 
 # Configures the endpoint
-config :nomattic, NomatticWeb.Endpoint,
+config :nomatic, NomaticWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "uUYO8L0gw1SRh5zlf3oPsdnUVbRrx1k/urpEpbmmwDNhbjZflBf9Q+1nII99lW+I",
-  render_errors: [view: NomatticWeb.ErrorView, accepts: ~w(html json), layout: false],
-  pubsub_server: Nomattic.PubSub,
+  render_errors: [view: NomaticWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Nomatic.PubSub,
   live_view: [signing_salt: "6umKD4yx"]
 
 # Configures Elixir's Logger

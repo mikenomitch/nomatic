@@ -1,5 +1,5 @@
-defmodule Nomattic.Repo do
+defmodule Nomatic.Repo do
   use Ecto.Repo,
-    otp_app: :nomattic,
+    otp_app: :nomatic,
     adapter: Ecto.Adapters.Postgres
 end

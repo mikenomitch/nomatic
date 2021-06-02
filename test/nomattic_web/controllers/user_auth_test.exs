@@ -1,16 +1,16 @@
-defmodule NomatticWeb.UserAuthTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.UserAuthTest do
+  use NomaticWeb.ConnCase, async: true
 
-  alias Nomattic.Accounts
-  alias NomatticWeb.UserAuth
-  import Nomattic.AccountsFixtures
+  alias Nomatic.Accounts
+  alias NomaticWeb.UserAuth
+  import Nomatic.AccountsFixtures
 
-  @remember_me_cookie "_nomattic_web_user_remember_me"
+  @remember_me_cookie "_nomatic_web_user_remember_me"
 
   setup %{conn: conn} do
     conn =
       conn
-      |> Map.replace!(:secret_key_base, NomatticWeb.Endpoint.config(:secret_key_base))
+      |> Map.replace!(:secret_key_base, NomaticWeb.Endpoint.config(:secret_key_base))
       |> init_test_session(%{})
 
     %{user: user_fixture(), conn: conn}
@@ -65,7 +65,7 @@ defmodule NomatticWeb.UserAuthTest do
 
     test "broadcasts to the given live_socket_id", %{conn: conn} do
       live_socket_id = "users_sessions:abcdef-token"
-      NomatticWeb.Endpoint.subscribe(live_socket_id)
+      NomaticWeb.Endpoint.subscribe(live_socket_id)
 
       conn
       |> put_session(:live_socket_id, live_socket_id)

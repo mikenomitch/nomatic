@@ -1,9 +1,9 @@
-defmodule Nomattic.MixProject do
+defmodule Nomatic.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :nomattic,
+      app: :nomatic,
       version: "0.1.0",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -19,7 +19,7 @@ defmodule Nomattic.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Nomattic.Application, []},
+      mod: {Nomatic.Application, []},
       extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
@@ -49,7 +49,7 @@ defmodule Nomattic.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:phx_gen_auth, "~> 0.7", only: [:dev], runtime: false},
-      {:ecto_psql_extras, "~> 0.2"},
+      {:ecto_psql_extras, "~> 0.2"}
     ]
   end
 

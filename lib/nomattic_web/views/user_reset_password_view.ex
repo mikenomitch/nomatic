@@ -1,3 +1,3 @@
-defmodule NomatticWeb.UserResetPasswordView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.UserResetPasswordView do
+  use NomaticWeb, :view
 end

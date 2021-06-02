@@ -1,9 +1,9 @@
-defmodule Nomattic.AccountsTest do
-  use Nomattic.DataCase
+defmodule Nomatic.AccountsTest do
+  use Nomatic.DataCase
 
-  alias Nomattic.Accounts
-  import Nomattic.AccountsFixtures
-  alias Nomattic.Accounts.{User, UserToken}
+  alias Nomatic.Accounts
+  import Nomatic.AccountsFixtures
+  alias Nomatic.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do

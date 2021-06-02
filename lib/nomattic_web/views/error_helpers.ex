@@ -1,4 +1,4 @@
-defmodule NomatticWeb.ErrorHelpers do
+defmodule NomaticWeb.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule NomatticWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(NomatticWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(NomaticWeb.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(NomatticWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(NomaticWeb.Gettext, "errors", msg, opts)
     end
   end
 end

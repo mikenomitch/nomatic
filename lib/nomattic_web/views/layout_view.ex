@@ -1,3 +1,3 @@
-defmodule NomatticWeb.LayoutView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.LayoutView do
+  use NomaticWeb, :view
 end

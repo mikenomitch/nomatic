@@ -1,8 +1,8 @@
-defmodule NomatticWeb.UserSettingsControllerTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.UserSettingsControllerTest do
+  use NomaticWeb.ConnCase, async: true
 
-  alias Nomattic.Accounts
-  import Nomattic.AccountsFixtures
+  alias Nomatic.Accounts
+  import Nomatic.AccountsFixtures
 
   setup :register_and_log_in_user
 

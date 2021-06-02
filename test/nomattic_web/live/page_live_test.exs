@@ -1,5 +1,5 @@
-defmodule NomatticWeb.PageLiveTest do
-  use NomatticWeb.ConnCase
+defmodule NomaticWeb.PageLiveTest do
+  use NomaticWeb.ConnCase
 
   import Phoenix.LiveViewTest
 

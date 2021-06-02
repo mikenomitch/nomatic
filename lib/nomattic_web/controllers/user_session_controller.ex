@@ -1,8 +1,8 @@
-defmodule NomatticWeb.UserSessionController do
-  use NomatticWeb, :controller
+defmodule NomaticWeb.UserSessionController do
+  use NomaticWeb, :controller
 
-  alias Nomattic.Accounts
-  alias NomatticWeb.UserAuth
+  alias Nomatic.Accounts
+  alias NomaticWeb.UserAuth
 
   def new(conn, _params) do
     render(conn, "new.html", error_message: nil)

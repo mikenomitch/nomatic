@@ -1,9 +1,9 @@
-defmodule NomatticWeb.UserResetPasswordControllerTest do
-  use NomatticWeb.ConnCase, async: true
+defmodule NomaticWeb.UserResetPasswordControllerTest do
+  use NomaticWeb.ConnCase, async: true
 
-  alias Nomattic.Accounts
-  alias Nomattic.Repo
-  import Nomattic.AccountsFixtures
+  alias Nomatic.Accounts
+  alias Nomatic.Repo
+  import Nomatic.AccountsFixtures
 
   setup do
     %{user: user_fixture()}

@@ -1,4 +1,4 @@
-defmodule NomatticWeb.ChannelCase do
+defmodule NomaticWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -11,7 +11,7 @@ defmodule NomatticWeb.ChannelCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use NomatticWeb.ChannelCase, async: true`, although
+  by setting `use NomaticWeb.ChannelCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,18 +21,18 @@ defmodule NomatticWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import NomatticWeb.ChannelCase
+      import NomaticWeb.ChannelCase
 
       # The default endpoint for testing
-      @endpoint NomatticWeb.Endpoint
+      @endpoint NomaticWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nomattic.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nomatic.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Nomattic.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Nomatic.Repo, {:shared, self()})
     end
 
     :ok

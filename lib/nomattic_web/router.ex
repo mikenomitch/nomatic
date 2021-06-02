@@ -1,13 +1,13 @@
-defmodule NomatticWeb.Router do
-  use NomatticWeb, :router
+defmodule NomaticWeb.Router do
+  use NomaticWeb, :router
 
-  import NomatticWeb.UserAuth
+  import NomaticWeb.UserAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {NomatticWeb.LayoutView, :root}
+    plug :put_root_layout, {NomaticWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
@@ -17,14 +17,14 @@ defmodule NomatticWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", NomatticWeb do
+  scope "/", NomaticWeb do
     pipe_through :browser
 
     live "/", PageLive, :index
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", NomatticWeb do
+  scope "/api", NomaticWeb do
     pipe_through :api
   end
 
@@ -40,13 +40,13 @@ defmodule NomatticWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: NomatticWeb.Telemetry, ecto_repos: [Nomattic.Repo]
+      live_dashboard "/dashboard", metrics: NomaticWeb.Telemetry, ecto_repos: [Nomatic.Repo]
     end
   end
 
   ## Authentication routes
 
-  scope "/", NomatticWeb do
+  scope "/", NomaticWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/users/register", UserRegistrationController, :new
@@ -59,7 +59,7 @@ defmodule NomatticWeb.Router do
     put "/users/reset_password/:token", UserResetPasswordController, :update
   end
 
-  scope "/", NomatticWeb do
+  scope "/", NomaticWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/users/settings", UserSettingsController, :edit
@@ -67,7 +67,7 @@ defmodule NomatticWeb.Router do
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
   end
 
-  scope "/", NomatticWeb do
+  scope "/", NomaticWeb do
     pipe_through [:browser]
 
     delete "/users/log_out", UserSessionController, :delete

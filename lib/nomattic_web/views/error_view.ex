@@ -1,5 +1,5 @@
-defmodule NomatticWeb.ErrorView do
-  use NomatticWeb, :view
+defmodule NomaticWeb.ErrorView do
+  use NomaticWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

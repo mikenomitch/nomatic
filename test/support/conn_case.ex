@@ -1,4 +1,4 @@
-defmodule NomatticWeb.ConnCase do
+defmodule NomaticWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule NomatticWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use NomatticWeb.ConnCase, async: true`, although
+  by setting `use NomaticWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -22,20 +22,20 @@ defmodule NomatticWeb.ConnCase do
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import NomatticWeb.ConnCase
+      import NomaticWeb.ConnCase
 
-      alias NomatticWeb.Router.Helpers, as: Routes
+      alias NomaticWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint NomatticWeb.Endpoint
+      @endpoint NomaticWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nomattic.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Nomatic.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Nomattic.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Nomatic.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
@@ -50,7 +50,7 @@ defmodule NomatticWeb.ConnCase do
   test context.
   """
   def register_and_log_in_user(%{conn: conn}) do
-    user = Nomattic.AccountsFixtures.user_fixture()
+    user = Nomatic.AccountsFixtures.user_fixture()
     %{conn: log_in_user(conn, user), user: user}
   end
 
@@ -60,7 +60,7 @@ defmodule NomatticWeb.ConnCase do
   It returns an updated `conn`.
   """
   def log_in_user(conn, user) do
-    token = Nomattic.Accounts.generate_user_session_token(user)
+    token = Nomatic.Accounts.generate_user_session_token(user)
 
     conn
     |> Phoenix.ConnTest.init_test_session(%{})

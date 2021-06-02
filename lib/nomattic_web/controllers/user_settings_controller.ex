@@ -1,8 +1,8 @@
-defmodule NomatticWeb.UserSettingsController do
-  use NomatticWeb, :controller
+defmodule NomaticWeb.UserSettingsController do
+  use NomaticWeb, :controller
 
-  alias Nomattic.Accounts
-  alias NomatticWeb.UserAuth
+  alias Nomatic.Accounts
+  alias NomaticWeb.UserAuth
 
   plug :assign_email_and_password_changesets
 
