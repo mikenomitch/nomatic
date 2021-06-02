@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import "./variables.scss";
+
+/* ======== */
+/*   HTML   */
+/* ========= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: $font-size-body-base;
+
+  @include var(color, color);
+  @include var(background-color, background-color);
+
+  &[data-theme="dark"] {
+    @include dark-theme;
+  }
+}
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *:before,
+html.theme-transition *:after {
+  transition: all 750ms !important;
+  transition-delay: 0 !important;
+}
+
+a {
+  @include var(color, color);
+  @include var(background-color, background-color);
+}
+
+/* ======== */
+/*   BODY   */
+/* ========= */
+
+body {
+  margin: 0;
+  padding: 0;
+
+  font-family: $base-font-type;
+  @include var(color, color);
+  @include var(background-color, background-color);
+
+  // give mobile scrolling the feel
+  // of a native app (roughly)
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  @include var(color, color);
+  @include var(background-color, background-color);
+}
+
+/* =========== */
+/*   HEADERS   */
+/* =========== */
+
+h1 {
+  // sanitize is overriding this
+  // without important
+  font-size: $font-size-xxl !important;
+}
+
+h1.hero {
+  font-size: $font-size-jumbo;
+}
+
+h2 {
+  font-size: $font-size-xl;
+}
+
+h2.hero {
+  font-size: $font-size-jumbo;
+}
+
+h3 {
+  font-size: $font-size-lg;
+}
+
+h4 {
+  font-size: $font-size-md;
+}
+
+h5 {
+  font-size: $font-size-sm;
+}
