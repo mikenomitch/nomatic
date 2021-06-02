@@ -3,6 +3,9 @@
 @import "./shared.scss";
 @import "./phoenix.css";
 
+// Import specific shared components
+@import "./header.scss";
+
 /* LiveView specific classes for your customizations */
 .phx-no-feedback.invalid-feedback,
 .phx-no-feedback .invalid-feedback {
