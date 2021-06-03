@@ -1,19 +1,39 @@
-<h1> Get Started with Nomad </h1>
+<%= if @current_user do %>
+  <%= unless @current_user do %>
+    <h1>
+      Your Nomad Stacks
+    </h1>
+  <% else %>
+    <h1>
+      Create your first Nomad Stack
+    </h1>
+  <% end %>
+<% else %>
+  <h1> Kickstart Nomad </h1>
 
-<ol>
-  <li>
-    Sign Up
-  </li>
+  <ol>
+    <li>
+      Sign Up
+    </li>
 
-  <li>
-    Input an Amazon IAM Token
-  </li>
+    <li>
+      Input an Amazon IAM Token
+    </li>
 
-  <li>
-    Launch Nomad, Consul, and Vault on your AWS account
-  </li>
+    <li>
+      Launch Nomad, Consul, and Vault on your AWS account
+    </li>
 
-  <li>
-    Run your applications on Nomad
-  </li>
-</ol>
+    <li>
+      Run your applications on Nomad
+    </li>
+  </ol>
+
+  <p>
+    All in under 10 minutes.
+  </p>
+
+  <p>
+    When you're done, you can continue to manage your HashiStack with Terraform. There is no lock in.
+  </p>
+<% end %>

@@ -1,0 +1,48 @@
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_component NomaticWeb.StackLive.FormComponent,
+    socket: @socket,
+    id: @stack.id || :new,
+    title: @page_title,
+    action: @live_action,
+    stack: @stack
+  %>
+
+  <span><%= live_patch "Back", to: Routes.stack_index_path(@socket, :index) %></span>
+<% end %>
+
+<%= if @live_action in [:show] do %>
+  <h1>Hi</h1>
+<% end %>
+
+<%= if @live_action in [:index] do %>
+  <h1>Stacks</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Region</th>
+        <th>Status</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="stacks">
+      <%= for stack <- @stacks do %>
+      <tr id="stack-<%= stack.id %>">
+        <td><%= stack.name %></td>
+        <td><%= stack.region %></td>
+        <td><%= stack.status %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.stack_index_path(@socket, :show, stack) %></span>
+          <span><%= live_patch "Edit", to: Routes.stack_index_path(@socket, :edit, stack) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: stack.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <span><%= live_patch "New Stack", to: Routes.stack_index_path(@socket, :new) %></span>
+<% end %>
