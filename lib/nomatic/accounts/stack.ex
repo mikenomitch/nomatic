@@ -59,42 +59,11 @@ defmodule Nomatic.Accounts.Stack do
   end
 
   def provision({:ok, stack}) do
-    Task.start(__MODULE__, :validate_creds, [stack])
-
+    Task.start(Nomatic.Provisioner, :start, [stack])
     {:ok, stack}
   end
 
   def provision(not_ok_res), do: not_ok_res
-
-  def validate_creds(stack) do
-    :timer.sleep(1000)
-
-    Accounts.update_stack(stack, %{status: "validated"})
-
-    Task.start(__MODULE__, :build_state_bucket, [stack])
-  end
-
-  def build_state_bucket(stack) do
-    :timer.sleep(1000)
-
-    Accounts.update_stack(stack, %{status: "pre-provisioned"})
-
-    Task.start(__MODULE__, :build_hashistack, [stack])
-  end
-
-  def build_hashistack(stack) do
-    :timer.sleep(1000)
-
-    Accounts.update_stack(stack, %{status: "provisioned"})
-
-    Task.start(__MODULE__, :post_provisioning, [stack])
-  end
-
-  def post_provisioning(stack) do
-    :timer.sleep(1000)
-
-    Accounts.update_stack(stack, %{status: "ready"}) |> IO.inspect()
-  end
 
   def maybe_hash_secret_key(changeset, attrs) do
     hash_secret_key? = Map.get(attrs, :secret_key, true)
