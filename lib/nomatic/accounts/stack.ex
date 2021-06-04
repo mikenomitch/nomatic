@@ -2,11 +2,16 @@ defmodule Nomatic.Accounts.Stack do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Nomatic.Repo
+  alias Nomatic.Accounts
+
   schema "stacks" do
     field(:name, :string)
     field(:key, :string)
     field(:secret_key, :string, virtual: true)
     field(:hashed_secret_key, :string)
+
+    field(:status, :string)
 
     field(:client_count, :integer)
     field(:consul_address, :string)
@@ -18,7 +23,6 @@ defmodule Nomatic.Accounts.Stack do
     field(:region, :string)
     field(:server_count, :integer)
     field(:state_bucket, :string)
-    field(:status, :string)
     field(:type, :string)
     field(:use_consul, :boolean, default: false)
     field(:use_vault, :boolean, default: false)
@@ -43,7 +47,8 @@ defmodule Nomatic.Accounts.Stack do
       :key,
       :secret_key,
       :name,
-      :region
+      :region,
+      :status
     ])
     |> validate_required([
       :key,
@@ -53,7 +58,45 @@ defmodule Nomatic.Accounts.Stack do
     |> maybe_hash_secret_key(attrs)
   end
 
-  defp maybe_hash_secret_key(changeset, attrs) do
+  def provision({:ok, stack}) do
+    Task.start(__MODULE__, :validate_creds, [stack])
+
+    {:ok, stack}
+  end
+
+  def provision(not_ok_res), do: not_ok_res
+
+  def validate_creds(stack) do
+    :timer.sleep(1000)
+
+    Accounts.update_stack(stack, %{status: "validated"})
+
+    Task.start(__MODULE__, :build_state_bucket, [stack])
+  end
+
+  def build_state_bucket(stack) do
+    :timer.sleep(1000)
+
+    Accounts.update_stack(stack, %{status: "pre-provisioned"})
+
+    Task.start(__MODULE__, :build_hashistack, [stack])
+  end
+
+  def build_hashistack(stack) do
+    :timer.sleep(1000)
+
+    Accounts.update_stack(stack, %{status: "provisioned"})
+
+    Task.start(__MODULE__, :post_provisioning, [stack])
+  end
+
+  def post_provisioning(stack) do
+    :timer.sleep(1000)
+
+    Accounts.update_stack(stack, %{status: "ready"}) |> IO.inspect()
+  end
+
+  def maybe_hash_secret_key(changeset, attrs) do
     hash_secret_key? = Map.get(attrs, :secret_key, true)
     secret_key = get_change(changeset, :secret_key)
 

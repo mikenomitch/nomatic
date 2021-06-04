@@ -2,7 +2,7 @@ defmodule NomaticWeb.StackLive do
   use NomaticWeb, :live_view
 
   alias Nomatic.Accounts
-  alias Nomatic.Accounts.Stack
+  alias Nomatic.Accounts.{LiveUpdates, Stack}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -15,9 +15,14 @@ defmodule NomaticWeb.StackLive do
   end
 
   defp apply_action(socket, :show, %{"id" => id}) do
+    LiveUpdates.subscribe_live_view("stacks")
+    IO.puts("RUN ME")
+
+    stack = Accounts.get_stack!(id)
+
     socket
     |> assign(:page_title, "Stack")
-    |> assign(:stack, Accounts.get_stack!(id))
+    |> assign(:stack, stack)
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -57,6 +62,11 @@ defmodule NomaticWeb.StackLive do
 
   def handle_event("go-to-show", %{"id" => id}, socket) do
     {:noreply, push_redirect(socket, to: "/stacks/#{id}")}
+  end
+
+  def handle_info("updated", socket) do
+    stack = Accounts.get_stack!(socket.assigns.stack.id)
+    {:noreply, assign(socket, :stack, stack)}
   end
 
   defp list_stacks do

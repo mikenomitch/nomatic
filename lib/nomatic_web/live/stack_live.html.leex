@@ -18,10 +18,17 @@
 <%= if @live_action in [:show] do %>
   <h1><%= @stack.name %></h1>
 
+  <div>Region: <%= @stack.region %> </div>
+  <div>Status: <%= @stack.status %> </div>
+
+  <br />
+
   <div>
     <span><%= live_patch "Edit", to: Routes.stack_path(@socket, :edit, @stack) %></span>
     <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @stack.id, data: [confirm: "Are you sure?"] %></span>
   </div>
+
+  <br />
 
   <span><%= live_patch "Back", to: Routes.stack_path(@socket, :index) %></span>
 <% end %>

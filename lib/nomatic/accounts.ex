@@ -5,7 +5,7 @@ defmodule Nomatic.Accounts do
 
   import Ecto.Query, warn: false
   alias Nomatic.Repo
-  alias Nomatic.Accounts.{User, UserToken, UserNotifier}
+  alias Nomatic.Accounts.{User, UserToken, UserNotifier, LiveUpdates}
 
   ## Database getters
 
@@ -391,9 +391,10 @@ defmodule Nomatic.Accounts do
 
   """
   def create_stack(attrs \\ %{}) do
-    %Stack{}
+    %Stack{status: "fresh"}
     |> Stack.changeset(attrs)
     |> Repo.insert()
+    |> Stack.provision()
   end
 
   @doc """
@@ -409,9 +410,21 @@ defmodule Nomatic.Accounts do
 
   """
   def update_stack(%Stack{} = stack, attrs) do
-    stack
-    |> Stack.changeset(attrs)
-    |> Repo.update()
+    res =
+      stack
+      |> Stack.changeset(attrs)
+      |> Repo.update()
+
+    case res do
+      {:ok, new_stack} ->
+        LiveUpdates.notify_live_view("stacks", "updated")
+        res
+
+      # NomaticWeb.Endpoint.broadcast_from(self(), new_stack, "update", attrs)
+
+      _ ->
+        res
+    end
   end
 
   @doc """
