@@ -29,11 +29,11 @@ defmodule NomaticWeb.StackLive.FormComponent do
 
   defp save_stack(socket, :edit, stack_params) do
     case Accounts.update_stack(socket.assigns.stack, stack_params) do
-      {:ok, _stack} ->
+      {:ok, stack} ->
         {:noreply,
          socket
          |> put_flash(:info, "Stack updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(to: "/stacks/#{stack.id}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, :changeset, changeset)}
@@ -42,11 +42,11 @@ defmodule NomaticWeb.StackLive.FormComponent do
 
   defp save_stack(socket, :new, stack_params) do
     case Accounts.create_stack(stack_params) do
-      {:ok, _stack} ->
+      {:ok, stack} ->
         {:noreply,
          socket
          |> put_flash(:info, "Stack created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(to: "/stacks/#{stack.id}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

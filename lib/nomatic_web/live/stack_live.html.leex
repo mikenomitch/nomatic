@@ -1,0 +1,50 @@
+<%= if @live_action in [:edit, :new] do %>
+  <%= live_component NomaticWeb.StackLive.FormComponent,
+    socket: @socket,
+    id: @stack.id || :new,
+    title: @page_title,
+    action: @live_action,
+    regions: ["us-east-1", "us-west-2"],
+    stack: @stack
+  %>
+
+  <%= if @live_action in [:edit] do %>
+    <span><%= live_patch "Back", to: Routes.stack_path(@socket, :show, @stack.id) %></span>
+  <% else %>
+    <span><%= live_patch "Back", to: Routes.stack_path(@socket, :index) %></span>
+  <% end %>
+<% end %>
+
+<%= if @live_action in [:show] do %>
+  <h1><%= @stack.name %></h1>
+
+  <div>
+    <span><%= live_patch "Edit", to: Routes.stack_path(@socket, :edit, @stack) %></span>
+    <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @stack.id, data: [confirm: "Are you sure?"] %></span>
+  </div>
+
+  <span><%= live_patch "Back", to: Routes.stack_path(@socket, :index) %></span>
+<% end %>
+
+<%= if @live_action in [:index] do %>
+  <h1>Stacks</h1>
+  <div class="stack-list">
+    <%= for stack <- @stacks do %>
+      <div class="stack-list-item" phx-click="go-to-show" phx-value-id="<%= stack.id %>">
+        <div>
+          <b><%= stack.name %></b>
+        </div>
+        <div>
+          <i><%= stack.region %></i>
+        </div>
+        <div>
+          <i><%= stack.status %></i>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <button phx-click="go-to-new">New Stack</button>
+  </div>
+<% end %>

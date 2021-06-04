@@ -13,6 +13,16 @@ defmodule NomaticWeb.PageLive do
     end
   end
 
+  def handle_params(_params, _url, socket) do
+    case Map.get(socket.assigns, :current_user) do
+      %User{} ->
+        {:noreply, push_redirect(socket, to: "/stacks")}
+
+      _ ->
+        {:noreply, socket}
+    end
+  end
+
   # @impl true
   # def handle_event("suggest", %{"q" => query}, socket) do
   #   {:noreply, assign(socket, results: search(query), query: query)}

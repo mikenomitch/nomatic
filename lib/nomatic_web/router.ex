@@ -21,10 +21,11 @@ defmodule NomaticWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/stacks", StackLive.Index, :index
-    live "/stacks/new", StackLive.Index, :new
-    live "/stacks/:id", StackLive.Index, :show
-    live "/stacks/:id/edit", StackLive.Index, :edit
+
+    live "/stacks", StackLive, :index
+    live "/stacks/new", StackLive, :new
+    live "/stacks/:id", StackLive, :show
+    live "/stacks/:id/edit", StackLive, :edit
   end
 
   # Other scopes may use custom stacks.

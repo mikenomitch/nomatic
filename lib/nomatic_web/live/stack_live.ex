@@ -1,4 +1,4 @@
-defmodule NomaticWeb.StackLive.Index do
+defmodule NomaticWeb.StackLive do
   use NomaticWeb, :live_view
 
   alias Nomatic.Accounts
@@ -39,11 +39,24 @@ defmodule NomaticWeb.StackLive.Index do
   end
 
   @impl true
+  @spec handle_event(<<_::48, _::_*8>>, any, Phoenix.LiveView.Socket.t()) ::
+          {:noreply, Phoenix.LiveView.Socket.t()}
   def handle_event("delete", %{"id" => id}, socket) do
     stack = Accounts.get_stack!(id)
     {:ok, _} = Accounts.delete_stack(stack)
 
-    {:noreply, assign(socket, :stacks, list_stacks())}
+    {:noreply,
+     socket
+     |> assign(:stacks, list_stacks())
+     |> push_redirect(to: "/stacks")}
+  end
+
+  def handle_event("go-to-new", _params, socket) do
+    {:noreply, push_redirect(socket, to: "/stacks/new")}
+  end
+
+  def handle_event("go-to-show", %{"id" => id}, socket) do
+    {:noreply, push_redirect(socket, to: "/stacks/#{id}")}
   end
 
   defp list_stacks do

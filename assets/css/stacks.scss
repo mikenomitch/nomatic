@@ -1,0 +1,12 @@
+.stack-list {
+  margin-bottom: $spacing-lg;
+
+  .stack-list-item {
+    @include fade-in;
+    @include floating;
+    @include clickable(#efefef);
+
+    padding: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+}
