@@ -45,7 +45,7 @@ defmodule NomaticWeb.StackLive.FormComponent do
       {:ok, stack} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Stack created successfully")
+         |> put_flash(:info, "Stack creation has begun. Watch Status. This takes ~5 minutes.")
          |> push_redirect(to: "/stacks/#{stack.id}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->

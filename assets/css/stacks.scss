@@ -4,6 +4,7 @@
   .stack-list-item {
     @include fade-in;
     @include floating;
+    @include bordered;
     @include clickable(#efefef);
 
     padding: $spacing-md;

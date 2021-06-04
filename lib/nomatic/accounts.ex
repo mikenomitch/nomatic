@@ -443,6 +443,10 @@ defmodule Nomatic.Accounts do
     Repo.delete(stack)
   end
 
+  def deprovision_stack(%Stack{} = stack) do
+    Task.start(Nomatic.Provisioner, :deprovision, [stack])
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking stack changes.
 

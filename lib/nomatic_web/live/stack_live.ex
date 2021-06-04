@@ -16,7 +16,6 @@ defmodule NomaticWeb.StackLive do
 
   defp apply_action(socket, :show, %{"id" => id}) do
     LiveUpdates.subscribe_live_view("stacks")
-    IO.puts("RUN ME")
 
     stack = Accounts.get_stack!(id)
 
@@ -48,12 +47,12 @@ defmodule NomaticWeb.StackLive do
           {:noreply, Phoenix.LiveView.Socket.t()}
   def handle_event("delete", %{"id" => id}, socket) do
     stack = Accounts.get_stack!(id)
-    {:ok, _} = Accounts.delete_stack(stack)
+    {:ok, _} = Accounts.deprovision_stack(stack)
 
     {:noreply,
      socket
-     |> assign(:stacks, list_stacks())
-     |> push_redirect(to: "/stacks")}
+     |> put_flash(:info, "Deprovisioning Stack")
+     |> assign(:stacks, list_stacks())}
   end
 
   def handle_event("go-to-new", _params, socket) do
