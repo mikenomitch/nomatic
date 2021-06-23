@@ -5,8 +5,14 @@ defmodule NomaticWeb.StackLive do
   alias Nomatic.Accounts.{LiveUpdates, Stack}
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :stacks, list_stacks())}
+  def mount(_params, session, socket) do
+    user_id = session |> Map.get("current_user") |> Map.get(:id)
+
+    {:ok,
+     assign(
+       socket,
+       %{stacks: stacks_for_user(user_id), user_id: user_id}
+     )}
   end
 
   @impl true
@@ -33,7 +39,9 @@ defmodule NomaticWeb.StackLive do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Stack")
-    |> assign(:stack, %Stack{})
+    |> assign(:stack, %Stack{
+      user_id: socket.assigns.user_id
+    })
   end
 
   defp apply_action(socket, :index, _params) do
@@ -52,7 +60,7 @@ defmodule NomaticWeb.StackLive do
     {:noreply,
      socket
      |> put_flash(:info, "Deprovisioning Stack")
-     |> assign(:stacks, list_stacks())}
+     |> assign(:stacks, stacks_for_user(socket.assigns.user_id))}
   end
 
   def handle_event("go-to-new", _params, socket) do
@@ -68,7 +76,7 @@ defmodule NomaticWeb.StackLive do
     {:noreply, assign(socket, :stack, stack)}
   end
 
-  defp list_stacks do
-    Accounts.list_stacks()
+  defp stacks_for_user(user_id) do
+    Accounts.list_stacks_for_user(user_id)
   end
 end

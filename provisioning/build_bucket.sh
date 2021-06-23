@@ -1,1 +1,0 @@
-echo "=== BUILDING BUCKET FOR TF STATE ==="

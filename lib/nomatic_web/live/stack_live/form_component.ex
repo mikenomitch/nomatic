@@ -24,7 +24,8 @@ defmodule NomaticWeb.StackLive.FormComponent do
   end
 
   def handle_event("save", %{"stack" => stack_params}, socket) do
-    save_stack(socket, socket.assigns.action, stack_params)
+    params = Map.merge(stack_params, %{user_id: socket.assigns.user_id})
+    save_stack(socket, socket.assigns.action, params)
   end
 
   defp save_stack(socket, :edit, stack_params) do

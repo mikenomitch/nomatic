@@ -8,39 +8,71 @@ defmodule Nomatic.Provisioner do
 
   def start(stack) do
     Accounts.update_stack(stack, %{status: "validated"})
-    Task.start(__MODULE__, :build_state_bucket, [stack])
+    Task.start(__MODULE__, :pre_provision, [stack])
   end
 
-  def build_state_bucket(stack) do
-    path = "/Users/mike/Code/nomattic/provisioning/build_bucket.sh"
+  def pre_provision(stack) do
+    path = "/Users/mike/Code/nomattic/provisioning/pre_provision.sh"
     args = "#{stack.key} #{stack.secret_key} #{stack.name} #{stack.region}"
     command = String.to_atom("#{path} #{args}")
 
-    :os.cmd(command)
+    res = :os.cmd(command)
+    IO.puts("Pre res")
+    IO.inspect(res)
 
-    Accounts.update_stack(stack, %{status: "pre-provisioned"})
-    Task.start(__MODULE__, :build_hashistack, [stack])
+    Accounts.update_stack(stack, %{status: "provision_pending"})
+    Task.start(__MODULE__, :provision, [stack])
   end
 
-  def build_hashistack(stack) do
-    path = "/Users/mike/Code/nomattic/provisioning/provision_infra.sh"
+  def provision(stack) do
+    path = "/Users/mike/Code/nomattic/provisioning/provision.sh"
     args = "#{stack.key} #{stack.secret_key} #{stack.name} #{stack.region}"
     command = String.to_atom("#{path} #{args}")
 
-    :os.cmd(command)
+    res = :os.cmd(command)
+    IO.puts("Provis res")
+    IO.inspect(res)
 
     Accounts.update_stack(stack, %{status: "provisioned"})
-    Task.start(__MODULE__, :post_provisioning, [stack])
+    Task.start(__MODULE__, :post_provision, [stack])
   end
 
-  def post_provisioning(stack) do
+  def post_provision(stack) do
     path = "/Users/mike/Code/nomattic/provisioning/post_provision.sh"
     args = "#{stack.key} #{stack.secret_key} #{stack.name} #{stack.region}"
     command = String.to_atom("#{path} #{args}")
 
-    :os.cmd(command)
+    res = :os.cmd(command)
+    IO.puts("Post res")
+    IO.inspect(res)
 
-    Accounts.update_stack(stack, %{status: "ready"})
+    parsed =
+      res
+      |> to_string
+      |> String.split("^^^^^^^^^^")
+      |> List.delete_at(0)
+      |> List.first()
+      |> to_charlist
+
+    case Jason.decode(parsed) do
+      {:ok,
+       %{
+         "consul_addr" => consul_address,
+         "consul_token" => consul_token,
+         "nomad_addr" => nomad_address,
+         "nomad_token" => nomad_token
+       }} ->
+        Accounts.update_stack(stack, %{
+          consul_address: consul_address,
+          nomad_address: nomad_address,
+          nomad_token: nomad_token,
+          consul_token: consul_token,
+          status: "ready"
+        })
+
+      _ ->
+        Accounts.update_stack(stack, %{status: "errored"})
+    end
   end
 
   def deprovision(stack) do

@@ -1,18 +1,15 @@
 defmodule Nomatic.Accounts.Stack do
   use Ecto.Schema
   import Ecto.Changeset
-
-  alias Nomatic.Repo
-  alias Nomatic.Accounts
+  alias Nomatic.Accounts.User
 
   schema "stacks" do
+    belongs_to :user, User
+
     field(:name, :string)
     field(:key, :string)
-    field(:secret_key, :string, virtual: true)
-    field(:hashed_secret_key, :string)
 
     field(:status, :string)
-
     field(:client_count, :integer)
     field(:consul_address, :string)
     field(:consul_version, :string)
@@ -28,19 +25,21 @@ defmodule Nomatic.Accounts.Stack do
     field(:use_vault, :boolean, default: false)
     field(:vault_address, :string)
     field(:vault_version, :string)
+    field(:nomad_client_port, :integer)
+    field(:nomad_client_address, :string)
+    field(:consul_client_port, :integer)
+    field(:consul_client_address, :string)
+
+    # TODO: Encrypt and fix
+    field(:secret_key, :string)
+    field(:hashed_secret_key, :string)
+    field(:nomad_token, :string)
+    field(:consul_token, :string)
+    field(:vault_token, :string)
 
     timestamps()
   end
 
-  @spec changeset(
-          {map, map}
-          | %{
-              :__struct__ => atom | %{:__changeset__ => map, optional(any) => any},
-              optional(atom) => any
-            },
-          :invalid | %{optional(:__struct__) => none, optional(atom | binary) => any}
-        ) :: Ecto.Changeset.t()
-  @doc false
   def changeset(stack, attrs) do
     stack
     |> cast(attrs, [
@@ -48,12 +47,19 @@ defmodule Nomatic.Accounts.Stack do
       :secret_key,
       :name,
       :region,
-      :status
+      :status,
+      :consul_address,
+      :nomad_address,
+      :nomad_client_address,
+      :nomad_token,
+      :consul_token,
+      :user_id
     ])
     |> validate_required([
       :key,
       :name,
-      :region
+      :region,
+      :user_id
     ])
     |> maybe_hash_secret_key(attrs)
   end
@@ -72,7 +78,8 @@ defmodule Nomatic.Accounts.Stack do
     if hash_secret_key? && secret_key && changeset.valid? do
       changeset
       |> put_change(:hashed_secret_key, Bcrypt.hash_pwd_salt(secret_key))
-      |> delete_change(:secret_key)
+
+      # |> delete_change(:secret_key)
     else
       changeset
     end

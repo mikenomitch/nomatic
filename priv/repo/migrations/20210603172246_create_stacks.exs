@@ -24,6 +24,22 @@ defmodule Nomatic.Repo.Migrations.CreateStacks do
       add :vault_version, :string
       add :region, :string
 
+      # TODO: MAKE THESE STORED ENCRYPTED (IN VAULT?)
+      add :secret_key, :string
+      add :nomad_token, :string
+      add :consul_token, :string
+      add :vault_token, :string
+
+      # TODO: ALLOW FOR MULTIPLE
+      add :nomad_client_port, :integer
+      add :nomad_client_address, :string
+
+      # TODO: MAYBE REMOVE?
+      add :consul_client_port, :integer
+      add :consul_client_address, :string
+
+      add :user_id, references(:users)
+
       timestamps()
     end
 

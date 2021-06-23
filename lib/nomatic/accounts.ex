@@ -459,4 +459,16 @@ defmodule Nomatic.Accounts do
   def change_stack(%Stack{} = stack, attrs \\ %{}) do
     Stack.changeset(stack, attrs)
   end
+
+  def list_stacks_for_user(user_id) do
+    stacks_for_user(user_id) |> Repo.all()
+  end
+
+  # ===========================
+  # QUERIES
+  # ===========================
+
+  def stacks_for_user(query \\ Stack, user_id) do
+    from s in query, where: s.user_id == ^user_id
+  end
 end

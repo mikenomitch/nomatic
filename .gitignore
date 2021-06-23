@@ -34,3 +34,15 @@ npm-debug.log
 /priv/static/
 
 .elixir_ls
+
+pre-provision-tmp
+provision-tmp
+post-provision-tmp
+deprovision-tmp
+destroying
+
+pre-provision-tmp/*
+provision-tmp/*
+post-provision-tmp/*
+deprovision-tmp/*
+destroyin/*g

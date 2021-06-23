@@ -19,13 +19,7 @@ defmodule NomaticWeb.Router do
 
   scope "/", NomaticWeb do
     pipe_through :browser
-
     live "/", PageLive, :index
-
-    live "/stacks", StackLive, :index
-    live "/stacks/new", StackLive, :new
-    live "/stacks/:id", StackLive, :show
-    live "/stacks/:id/edit", StackLive, :edit
   end
 
   # Other scopes may use custom stacks.
@@ -70,6 +64,11 @@ defmodule NomaticWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    live "/stacks", StackLive, :index
+    live "/stacks/new", StackLive, :new
+    live "/stacks/:id", StackLive, :show
+    live "/stacks/:id/edit", StackLive, :edit
   end
 
   scope "/", NomaticWeb do

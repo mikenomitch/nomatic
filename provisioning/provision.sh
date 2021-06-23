@@ -1,5 +1,3 @@
-echo "=== POST-PROVISIONING SET UP ==="
-
 echo "=== PARSING ARGS ==="
 
 KEY=$1
@@ -9,7 +7,7 @@ REGION=$4
 
 echo "=== CLONING TERRAFORM MODULE ==="
 
-CLUSTER_PATH=./deprovision-tmp/$CLUSTER_NAME
+CLUSTER_PATH=./provision-tmp/$CLUSTER_NAME
 
 git clone https://github.com/mikenomitch/nomatic-stack.git $CLUSTER_PATH
 cd $CLUSTER_PATH
@@ -37,6 +35,6 @@ terraform init \
     -backend-config="dynamodb_table=$CLUSTER_NAME-lock" \
     -backend-config="encrypt=true"
 
-echo "=== DESTROYING ==="
+echo "=== APPLYING TERRAFORM ==="
 
-terraform destroy -auto-approve
+terraform apply -auto-approve -var region=$REGION -var cluster_name=$CLUSTER_NAME
