@@ -48,12 +48,8 @@ echo "=== ENSURING HEALTHY ==="
 
 echo "=== GETTING TOKENS ==="
 
-echo "NOMAD_ADDR"
-echo $NOMAD_ADDR
-echo "CONSUL_HTTP_ADDR"
-echo $CONSUL_HTTP_ADDR
+export NOMAD_TOKEN=$(curl --request POST "$NOMAD_ADDR/v1/acl/bootstrap" | jq -r .SecretID)
+export CONSUL_HTTP_TOKEN=$(curl --request PUT "$CONSUL_HTTP_ADDR/v1/acl/bootstrap" | jq -r .SecretID)
 
-# export NOMAD_TOKEN=$(curl --request POST '$NOMAD_ADDR/v1/acl/bootstrap' | jq -r .SecretID)
-# export CONSUL_HTTP_TOKEN=$(curl --request POST '$CONSUL_HTTP_ADDR/v1/acl/bootstrap' | jq -r .SecretID)
-
+printf '^^^^^^^^^^'
 printf '{"nomad_token":"%s","consul_token":"%s","nomad_addr":"%s","consul_addr":"%s"}' "$NOMAD_TOKEN" "$CONSUL_HTTP_TOKEN" "$NOMAD_ADDR" "$CONSUL_HTTP_ADDR"

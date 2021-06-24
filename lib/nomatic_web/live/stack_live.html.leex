@@ -21,8 +21,26 @@
   <div>Region: <%= @stack.region %> </div>
   <div>Status: <%= @stack.status %> </div>
 
-  <div>Nomad Addr: <%= @stack.nomad_address %> </div>
-  <div>Consul Addr: <%= @stack.consul_address %> </div>
+  <%= if @stack.nomad_address do %>
+    <div>
+      <%= link "Nomad Server Cluster", to: @stack.nomad_address %>
+    </div>
+  <% end %>
+
+  <%= if @stack.consul_address do %>
+    <div>
+      <%= link "Consul Servers", to: @stack.consul_address %>
+    </div>
+  <% end %>
+
+
+  <%= if @stack.nomad_token do %>
+    <div>Nomad Token: <%= @stack.nomad_token %> </div>
+  <% end %>
+
+  <%= if @stack.consul_token do %>
+    <div>Consul Token: <%= @stack.consul_token %> </div>
+  <% end %>
 
   <br />
 

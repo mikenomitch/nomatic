@@ -7,7 +7,7 @@ defmodule Nomatic.Provisioner do
   # alias Nomatic.Accounts.{Stack}
 
   def start(stack) do
-    Accounts.update_stack(stack, %{status: "validated"})
+    Accounts.update_stack(stack, %{status: "validating and setting up state bucket"})
     Task.start(__MODULE__, :pre_provision, [stack])
   end
 
@@ -20,7 +20,7 @@ defmodule Nomatic.Provisioner do
     IO.puts("Pre res")
     IO.inspect(res)
 
-    Accounts.update_stack(stack, %{status: "provision_pending"})
+    Accounts.update_stack(stack, %{status: "provisioning"})
     Task.start(__MODULE__, :provision, [stack])
   end
 

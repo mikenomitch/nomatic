@@ -24,7 +24,7 @@ defmodule NomaticWeb.StackLive.FormComponent do
   end
 
   def handle_event("save", %{"stack" => stack_params}, socket) do
-    params = Map.merge(stack_params, %{user_id: socket.assigns.user_id})
+    params = Map.merge(stack_params, %{"user_id" => socket.assigns.stack.user_id})
     save_stack(socket, socket.assigns.action, params)
   end
 
@@ -46,7 +46,7 @@ defmodule NomaticWeb.StackLive.FormComponent do
       {:ok, stack} ->
         {:noreply,
          socket
-         |> put_flash(:info, "Stack creation has begun. Watch Status. This takes ~5 minutes.")
+         |> put_flash(:info, "Your HashiStack is being created. This takes 5 to 10 minutes.")
          |> push_redirect(to: "/stacks/#{stack.id}")}
 
       {:error, %Ecto.Changeset{} = changeset} ->

@@ -11,7 +11,10 @@ defmodule NomaticWeb.StackLive do
     {:ok,
      assign(
        socket,
-       %{stacks: stacks_for_user(user_id), user_id: user_id}
+       %{
+         stacks: stacks_for_user(user_id),
+         user_id: user_id
+       }
      )}
   end
 

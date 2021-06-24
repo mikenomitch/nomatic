@@ -1,12 +1,6 @@
-echo "=== PARSING ARGS ==="
+echo "TEST"
 
-KEY=$1
-SECRET_KEY=$2
-CLUSTER_NAME=$3
-REGION=$4
+export FOO=https://pokeapi.co/api/v2/pokemon/ditto
+export BAR=$(curl $FOO | jq .base_experience)
 
-echo $REGION
-echo $CLUSTER_NAME
-
-printf '^^^^^^^^^^'
-printf '{"nomad_token":"%s","consul_token":"%s","nomad_addr":"%s","consul_addr":"%s"}' "$REGION" "$CLUSTER_NAME" "$CLUSTER_NAME" "$CLUSTER_NAME"
+echo $BAR
