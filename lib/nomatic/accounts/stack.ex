@@ -48,9 +48,10 @@ defmodule Nomatic.Accounts.Stack do
       :name,
       :region,
       :status,
-      :consul_address,
       :nomad_address,
       :nomad_client_address,
+      :consul_address,
+      :vault_address,
       :nomad_token,
       :consul_token,
       :user_id

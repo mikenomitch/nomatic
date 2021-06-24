@@ -1,3 +1,12 @@
+.stack-content {
+  @include fade-in;
+  @include floating;
+  @include bordered;
+
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
 .stack-list {
   margin-bottom: $spacing-lg;
 
@@ -9,5 +18,28 @@
 
     padding: $spacing-md;
     margin-bottom: $spacing-sm;
+  }
+}
+
+.stack {
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+
+  .stack-info {
+    @include bordered;
+  }
+
+  .stack-section {
+    @include bordered-bottom;
+    padding-bottom: $spacing-md;
+    margin-bottom: $spacing-md;
+  }
+
+  .external-link {
+    color: $color-primary;
+  }
+
+  .external-link:hover {
+    color: $color-primary-dark;
   }
 }

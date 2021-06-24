@@ -16,40 +16,115 @@
 <% end %>
 
 <%= if @live_action in [:show] do %>
-  <h1><%= @stack.name %></h1>
+  <div class="stack stack-content">
+    <h1><%= @stack.name %></h1>
 
-  <div>Region: <%= @stack.region %> </div>
-  <div>Status: <%= @stack.status %> </div>
-
-  <%= if @stack.nomad_address do %>
-    <div>
-      <%= link "Nomad Server Cluster", to: @stack.nomad_address %>
+    <div class="stack-section">
+      <div><b>Region:</b> <%= @stack.region %> </div>
+      <div><b>Status:</b> <%= @stack.status %> </div>
     </div>
-  <% end %>
 
-  <%= if @stack.consul_address do %>
+    <%= if @stack.nomad_address || @stack.consul_address || @stack.vault_address || @stack.nomad_client_address do %>
+      <div class="stack-section">
+        <h2>Links:</h2>
+
+        <%= if @stack.nomad_address do %>
+          <div>
+            <%= link "Nomad Cluster", to: @stack.nomad_address, class: "external-link" %>
+          </div>
+        <% end %>
+
+        <%= if @stack.consul_address do %>
+          <div>
+            <%= link "Consul Cluster", to: @stack.consul_address, class: "external-link" %>
+          </div>
+        <% end %>
+
+        <%= if @stack.vault_address do %>
+          <div>
+            <%= link "Vault Cluster", to: @stack.vault_address, class: "external-link" %>
+          </div>
+        <% end %>
+
+        <%= if @stack.nomad_client_address do %>
+          <div>
+            <%= link "Port 8080 on Nomad Clients", to: @stack.nomad_client_address, class: "external-link" %>
+            <i> (this will return a 502 Bad Gateway until you set up a load balancer) </i>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= if @stack.nomad_token || @stack.consul_token do %>
+      <div class="stack-section">
+        <h2>Tokens:</h2>
+
+        <%= if @stack.nomad_token do %>
+          <div><%= link "View Nomad Admin Token", to: "#", data: [confirm:  @stack.nomad_token] %></div>
+        <% end %>
+
+        <%= if @stack.consul_token do %>
+        <div><%= link "View Consul Admin Token", to: "#", data: [confirm:  @stack.consul_token] %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= if @stack.status == "ready" do %>
+      <div class="stack-section">
+        <h2>Next Steps:</h2>
+
+        <p> Congratualations! You've provisioned a HashiStack on AWS. Here's what you might do next:</p>
+
+        <details>
+          <summary>Connect to Nomad from your command line</summary>
+          <br/>
+          <div>Set your Nomad Address environment variable</div>
+          <pre><code class="language-bash">export NOMAD_ADDR=<%=@stack.nomad_address%></code></pre>
+          <div>Set your Nomad Token environment variable (copy from the token link above)</div>
+          <pre><code class="language-bash">export NOMAD_TOKEN=YOUR_NOMAD_TOKEN_COPIED_FROM_ABOVE</code></pre>
+          <div>Test out a connection <i>(will error if misconfigured)</i></div>
+          <pre><code class="language-bash">nomad status</code></pre>
+          <br/>
+        </details>
+
+        <details>
+          <br/>
+          <summary>Run an application and expose it to the web</summary>
+          <div>Deploy a demo web server to Nomad</div>
+          <pre><code class="language-bash">nomad run localhost:4000/jobs/webapp.hcl</code></pre>
+
+          <div>Deploy a load balancer to Nomad (listening on the port 808, which an ALB we set up is pointed to)</div>
+          <pre><code class="language-bash">nomad run localhost:4000/jobs/lb.hcl</code></pre>
+          <div>
+            <%= link "Visit your newly created webapp!", to: "#{@stack.nomad_client_address}/myapp", class: "external-link" %>
+            <i> This will say "Welcome!" if you've deployed the webapp properly.</i>
+          </div>
+          <br/>
+        </details>
+
+        <details>
+          <summary>Take control of your HashiStack with Terraform</summary>
+          <br/>
+          <p>
+            Nomatic kicked off your HashiStack for you, but you'll want to manage it yourself in the future.
+            <%= link "click here", to: "#", class: "external-link"  %> for instructions on how to manage and modify it using Terraform.
+          </p>
+        </details>
+
+        <details>
+          <summary>Learn more about Nomad</summary>
+          <br/>
+          <p>
+            <%= link "Click here to learn more about Nomad", to: "https://learn.hashicorp.com/collections/nomad/manage-jobs", class: "external-link" %>
+          </p>
+        </details>
+      </div>
+    <% end %>
+
     <div>
-      <%= link "Consul Servers", to: @stack.consul_address %>
+      <span><%= link "Deprovision and Delete Stack", to: "#", phx_click: "delete", phx_value_id: @stack.id, data: [confirm: "Are you sure? This will destroy your entire HashiStack."]%></span>
     </div>
-  <% end %>
-
-
-  <%= if @stack.nomad_token do %>
-    <div>Nomad Token: <%= @stack.nomad_token %> </div>
-  <% end %>
-
-  <%= if @stack.consul_token do %>
-    <div>Consul Token: <%= @stack.consul_token %> </div>
-  <% end %>
-
-  <br />
-
-  <div>
-    <span><%= live_patch "Edit", to: Routes.stack_path(@socket, :edit, @stack) %></span>
-    <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: @stack.id, data: [confirm: "Are you sure?"] %></span>
   </div>
-
-  <br />
 
   <span><%= live_patch "Back", to: Routes.stack_path(@socket, :index) %></span>
 <% end %>

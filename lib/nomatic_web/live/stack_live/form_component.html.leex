@@ -1,26 +1,28 @@
 <h2><%= @title %></h2>
 
-<%= f = form_for @changeset, "#",
-  id: "stack-form",
-  phx_target: @myself,
-  phx_change: "validate",
-  phx_submit: "save" %>
+<div class="stack-content">
+  <%= f = form_for @changeset, "#",
+    id: "stack-form",
+    phx_target: @myself,
+    phx_change: "validate",
+    phx_submit: "save" %>
 
-  <%= label f, :name %>
-  <%= text_input f, :name, placeholder: 'prod-hashistack' %>
-  <%= error_tag f, :name %>
+    <%= label f, :name %>
+    <%= text_input f, :name, placeholder: 'prod-hashistack' %>
+    <%= error_tag f, :name %>
 
-  <%= label f, :region %>
-  <%= select(f, :region, @regions) %>
-  <%= error_tag f, :region %>
+    <%= label f, :region %>
+    <%= select(f, :region, @regions) %>
+    <%= error_tag f, :region %>
 
-  <%= label f, :aws_key %>
-  <%= text_input f, :key, placeholder: "something like 'AKYAJYKCY2ABANHJSFBQ'" %>
-  <%= error_tag f, :key %>
+    <%= label f, :aws_key %>
+    <%= text_input f, :key, placeholder: "something like 'AKYAJYKCY2ABANHJSFBQ'" %>
+    <%= error_tag f, :key %>
 
-  <%= label f, :aws_secret_key %>
-  <%= password_input f, :secret_key, placeholder: "something like 'Xcr8csfB2tX8447lz3jDDc7X9TygZ8DB7mSUaw1j'" %>
-  <%= error_tag f, :secret_key %>
+    <%= label f, :aws_secret_key %>
+    <%= password_input f, :secret_key, placeholder: "something like 'Xcr8csfB2tX8447lz3jDDc7X9TygZ8DB7mSUaw1j'" %>
+    <%= error_tag f, :secret_key %>
 
-  <%= submit "Save", phx_disable_with: "Saving..." %>
-</form>
+    <%= submit "Save", phx_disable_with: "Saving..." %>
+  </form>
+</div>

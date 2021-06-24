@@ -60,11 +60,15 @@ defmodule Nomatic.Provisioner do
          "consul_addr" => consul_address,
          "consul_token" => consul_token,
          "nomad_addr" => nomad_address,
-         "nomad_token" => nomad_token
+         "nomad_token" => nomad_token,
+         "nomad_client_addr" => nomad_client_address,
+         "vault_addr" => vault_address
        }} ->
         Accounts.update_stack(stack, %{
           consul_address: consul_address,
           nomad_address: nomad_address,
+          vault_address: vault_address,
+          nomad_client_address: nomad_client_address,
           nomad_token: nomad_token,
           consul_token: consul_token,
           status: "ready"

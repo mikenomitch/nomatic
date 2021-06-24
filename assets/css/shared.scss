@@ -87,6 +87,10 @@
   border-radius: $border-radius-base;
 }
 
+@mixin bordered-bottom {
+  border-bottom: solid $border-width-base $border-color-base;
+}
+
 @mixin floating {
   @include var(box-shadow, box-shadow);
 }

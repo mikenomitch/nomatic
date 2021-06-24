@@ -53,9 +53,6 @@ defmodule NomaticWeb.StackLive do
     |> assign(:stack, nil)
   end
 
-  @impl true
-  @spec handle_event(<<_::48, _::_*8>>, any, Phoenix.LiveView.Socket.t()) ::
-          {:noreply, Phoenix.LiveView.Socket.t()}
   def handle_event("delete", %{"id" => id}, socket) do
     stack = Accounts.get_stack!(id)
     {:ok, _} = Accounts.deprovision_stack(stack)
