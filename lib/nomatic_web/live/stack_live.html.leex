@@ -22,6 +22,48 @@
     <div class="stack-section">
       <div><b>Region:</b> <%= @stack.region %> </div>
       <div><b>Status:</b> <%= @stack.status %> </div>
+
+    <%= if @stack.status == "pre-provision" do %>
+      <div class="alert alert-info">
+        Let's set up a HashiStack!
+        <br>
+        Right now, we're setting up a spot in AWS to track the state of your HashiStack.
+        <br>
+        Look for the bucket called "<%= @stack.name %>-state" in the
+        <%= link "S3 section of the AWS console", to: "https://s3.console.aws.amazon.com/s3/home?region=#{@stack.region}", class: "external-link" %>.
+        <br>
+        After we're done here, you can manage the HashiStack yourself using Terraform.
+      </div>
+    <% end %>
+
+    <%= if @stack.status == "provisioning" do %>
+      <div class="alert alert-info">
+        We're now setting up the HashiStack on AWS. This part takes about 10 minutes.
+        <br><br>
+        First, we'll set up an autoscaling group of EC2 servers to run Nomad, Consul, and Vault for you.
+        <br><br>
+        Then, we'll set up an autoscaling group for "Nomad clients". These EC2 instances run your applications.
+        They can be docker images, java apps, raw binaries, or any type of application.
+        <br><br>
+        After that, we'll connect a few load balancers to the autoscaling groups we just set up.
+        This will allow you to access the resources we just provisioned.
+      </div>
+    <% end %>
+
+    <%= if @stack.status == "post-provision" do %>
+      <div class="alert alert-info">
+        Great! Our HashiStack was properly provisioned.
+        <br><br>
+        The final step is setting up your admin tokens for Nomad and Consul. Keep these secret!
+      </div>
+    <% end %>
+
+    <%= if @stack.status == "errored" do %>
+      <div class="alert alert-danger">
+        Oh no! There was an error. We suggest you delete and deprovision this stack.
+      </div>
+    <% end %>
+
     </div>
 
     <%= if @stack.nomad_address || @stack.consul_address || @stack.vault_address || @stack.nomad_client_address do %>
@@ -91,10 +133,10 @@
           <br/>
           <summary>Run an application and expose it to the web</summary>
           <div>Deploy a demo web server to Nomad</div>
-          <pre><code class="language-bash">nomad run localhost:4000/jobs/webapp.hcl</code></pre>
+          <pre><code class="language-bash">nomad run http://localhost:4000/jobs/webapp.hcl</code></pre>
 
-          <div>Deploy a load balancer to Nomad (listening on the port 808, which an ALB we set up is pointed to)</div>
-          <pre><code class="language-bash">nomad run localhost:4000/jobs/lb.hcl</code></pre>
+          <div>Deploy a load balancer to Nomad (listening on the port 8080, which an ALB we set up is pointed to)</div>
+          <pre><code class="language-bash">nomad run http://localhost:4000/jobs/lb.hcl</code></pre>
           <div>
             <%= link "Visit your newly created webapp!", to: "#{@stack.nomad_client_address}/myapp", class: "external-link" %>
             <i> This will say "Welcome!" if you've deployed the webapp properly.</i>
@@ -130,24 +172,44 @@
 <% end %>
 
 <%= if @live_action in [:index] do %>
-  <h1>Stacks</h1>
-  <div class="stack-list">
-    <%= for stack <- @stacks do %>
-      <div class="stack-list-item" phx-click="go-to-show" phx-value-id="<%= stack.id %>">
-        <div>
-          <b><%= stack.name %></b>
+  <%= if length(@stacks) == 0 do %>
+    <h1>Provision your first HashiStack</h1>
+
+    <p>
+      A HashiStack consists of Nomad, Consul, and Vault.
+    </p>
+
+    <p>
+      Nomatic provisions EC2 instances in AutoScaling Groups on AWS, configures Nomad, Consul, and Vault on them, then adds load balances to access the servers.
+    </p>
+
+    <p>
+      In ten minutes, you can go from nothing to a production-ready architecture. When you're done, you can manage it all with Terraform and modify as you see fit. There is no lock in.
+    </p>
+
+  <% else %>
+    <h1>My stacks</h1>
+
+    <div class="stack-list">
+      <%= for stack <- @stacks do %>
+        <div class="stack-list-item" phx-click="go-to-show" phx-value-id="<%= stack.id %>">
+          <div>
+            <b><%= stack.name %></b>
+          </div>
+          <div>
+            <i><%= stack.region %></i>
+          </div>
+          <div>
+            <i><%= stack.status %></i>
+          </div>
         </div>
-        <div>
-          <i><%= stack.region %></i>
-        </div>
-        <div>
-          <i><%= stack.status %></i>
-        </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <div>
-    <button phx-click="go-to-new">New Stack</button>
+    <button phx-click="go-to-new">
+      <%= if length(@stacks) == 0, do: "Create my First Stack", else: "New Stack"%>
+    </button>
   </div>
 <% end %>
